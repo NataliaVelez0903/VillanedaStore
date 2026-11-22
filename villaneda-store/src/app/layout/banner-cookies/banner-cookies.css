@@ -1,0 +1,29 @@
+.banner {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: var(--z-banner);
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border-strong);
+  box-shadow: 0 -8px 24px rgb(0 0 0 / 0.5);
+}
+.banner__fila {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding-block: var(--space-2);
+}
+h2 {
+  color: var(--color-primary);
+  font-size: 1rem;
+  margin-bottom: 0.2rem;
+}
+p { color: var(--color-text-muted); font-size: 0.85rem; max-width: 70ch; }
+.banner__botones { display: flex; gap: 0.5rem; flex-shrink: 0; }
+
+@media (max-width: 640px) {
+  .banner__fila { flex-direction: column; align-items: stretch; }
+  .banner__botones .btn { flex: 1; }
+}

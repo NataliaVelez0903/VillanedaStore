@@ -1,1 +1,77 @@
-<p>registro works!</p>
+<section aria-labelledby="titulo-registro">
+  <h1 id="titulo-registro">Crear cuenta</h1>
+  <p>Regístrate en Villaneda Store.</p>
+
+  <form [formGroup]="formulario" novalidate>
+    <div>
+      <label for="nombre">Nombre completo</label>
+      <input
+        id="nombre"
+        type="text"
+        formControlName="nombre"
+        autocomplete="name"
+        required
+      />
+
+      @if (formulario.controls.nombre.touched &&
+           formulario.controls.nombre.invalid) {
+        <p role="alert">Escribe tu nombre con al menos 2 caracteres.</p>
+      }
+    </div>
+
+    <div>
+      <label for="correo">Correo electrónico</label>
+      <input
+        id="correo"
+        type="email"
+        formControlName="correo"
+        autocomplete="email"
+        required
+      />
+
+      @if (formulario.controls.correo.touched &&
+           formulario.controls.correo.invalid) {
+        <p role="alert">Escribe un correo electrónico válido.</p>
+      }
+    </div>
+
+    <div>
+      <label for="contrasena">Contraseña</label>
+      <input
+        id="contrasena"
+        type="password"
+        formControlName="contrasena"
+        autocomplete="new-password"
+        required
+      />
+
+      @if (formulario.controls.contrasena.touched &&
+           formulario.controls.contrasena.invalid) {
+        <p role="alert">Escribe una contraseña de al menos 8 caracteres.</p>
+      }
+    </div>
+
+    <div>
+      <label for="confirmar-contrasena">Confirmar contraseña</label>
+      <input
+        id="confirmar-contrasena"
+        type="password"
+        formControlName="confirmarContrasena"
+        autocomplete="new-password"
+        required
+      />
+
+      @if (formulario.controls.confirmarContrasena.touched) {
+        @if (formulario.controls.confirmarContrasena.hasError('required')) {
+          <p role="alert">Confirma tu contraseña.</p>
+        } @else if (formulario.hasError('contrasenasNoCoinciden')) {
+          <p role="alert">Las contraseñas no coinciden.</p>
+        }
+      }
+    </div>
+
+    <button type="submit" [disabled]="formulario.invalid">
+      Crear cuenta
+    </button>
+  </form>
+</section>

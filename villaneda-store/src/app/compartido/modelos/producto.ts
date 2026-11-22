@@ -1,14 +1,15 @@
-export type CategoriaReloj =
-  | 'hombre'
-  | 'mujer'
-  | 'deportivo'
-  | 'unisex';
+export type CategoriaReloj = 'hombre' | 'mujer' | 'deportivo' | 'unisex';
+
+/** Filtros del catálogo: una categoría o "nuevos". */
+export type FiltroCategoria = CategoriaReloj | 'nuevos';
 
 export interface Producto {
-  id: number;
+  id: string;
   nombre: string;
+  /** Id de la marca (ver Marca.id). */
   marca: string;
   descripcion: string;
+  /** Precio antes de descuento, en pesos colombianos. */
   precio: number;
   imagen: string;
   categoria: CategoriaReloj;

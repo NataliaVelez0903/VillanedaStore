@@ -1,2 +1,10 @@
-<h1>404 — Página no encontrada</h1>
-<p>La dirección que buscas no existe.</p>
+<section class="contenedor no-encontrada">
+  <p class="codigo" aria-hidden="true">404</p>
+  <h1>Página no encontrada</h1>
+  <p class="texto-suave">Parece que el tiempo se detuvo aquí: la dirección que buscas no existe o cambió.</p>
+  <div class="botones">
+    <a routerLink="/inicio" class="btn btn-dorado">Ir al inicio</a>
+    <a routerLink="/relojes" class="btn btn-borde">Ver relojes</a>
+    <button type="button" class="btn btn-texto" (click)="volver()">‹ Volver</button>
+  </div>
+</section>

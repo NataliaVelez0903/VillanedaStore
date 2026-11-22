@@ -1,1 +1,35 @@
-<p>blog works!</p>
+<section class="contenedor">
+  <h1 class="titulo-pagina">Blog</h1>
+  <p class="subtitulo-pagina">Guías, cuidados y consejos para elegir y conservar tu reloj.</p>
+
+  <div class="rejilla rejilla-2">
+    @for (articulo of articulos; track articulo.id) {
+      <article class="tarjeta articulo">
+        <img [src]="articulo.imagen" [alt]="articulo.titulo" loading="lazy" />
+        <div class="articulo__meta">
+          <span class="insignia insignia-dorada">{{ articulo.categoria }}</span>
+          <time [attr.datetime]="articulo.fecha">{{ articulo.fecha | date: "d 'de' MMMM 'de' y" }}</time>
+        </div>
+        <h2>{{ articulo.titulo }}</h2>
+        <p>{{ articulo.resumen }}</p>
+
+        @if (abierto() === articulo.id) {
+          <p [id]="'contenido-' + articulo.id" class="articulo__contenido">{{ articulo.contenido }}</p>
+        }
+
+        <div class="articulo__pie">
+          <small class="texto-suave">Por {{ articulo.autor }}</small>
+          <button
+            type="button"
+            class="btn btn-texto"
+            [attr.aria-expanded]="abierto() === articulo.id"
+            [attr.aria-controls]="'contenido-' + articulo.id"
+            (click)="alternar(articulo.id)"
+          >
+            {{ abierto() === articulo.id ? 'Leer menos' : 'Leer más' }}
+          </button>
+        </div>
+      </article>
+    }
+  </div>
+</section>
