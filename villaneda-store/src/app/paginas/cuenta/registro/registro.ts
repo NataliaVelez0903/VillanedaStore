@@ -1,9 +1,9 @@
 import { Component, inject } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { contrasenasCoinciden } from '../../../nucleo/validadores/contrasenas-coinciden';
 
 @Component({
-  imports: [],
+  imports: [ReactiveFormsModule],
   selector: 'app-registro',
   styleUrl: './registro.css',
   templateUrl: './registro.html',
