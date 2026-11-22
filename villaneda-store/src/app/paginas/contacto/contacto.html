@@ -1,1 +1,112 @@
-<p>contacto works!</p>
+<section class="contenedor">
+  <h1 class="titulo-pagina">Contacto</h1>
+  <p class="subtitulo-pagina">Escríbenos o visita la sede más cercana. Respondemos en menos de 24 horas hábiles.</p>
+
+  <div class="columnas">
+    <!-- Formulario -->
+    <form class="tarjeta" [formGroup]="formulario" (ngSubmit)="enviar()" novalidate aria-labelledby="titulo-form">
+      <h2 id="titulo-form">Envíanos un mensaje</h2>
+
+      <div class="fila-2">
+        <div class="campo">
+          <label for="nombre">Nombre</label>
+          <input id="nombre" formControlName="nombre" autocomplete="name" [attr.aria-invalid]="campoInvalido('nombre')" aria-describedby="error-nombre" />
+          @if (campoInvalido('nombre')) {
+            <span id="error-nombre" class="error">Ingresa tu nombre (mínimo 3 letras).</span>
+          }
+        </div>
+        <div class="campo">
+          <label for="telefono">Teléfono (opcional)</label>
+          <input id="telefono" type="tel" formControlName="telefono" autocomplete="tel" [attr.aria-invalid]="campoInvalido('telefono')" aria-describedby="error-telefono" />
+          @if (campoInvalido('telefono')) {
+            <span id="error-telefono" class="error">Usa solo números, espacios, + o - (7 a 15).</span>
+          }
+        </div>
+      </div>
+
+      <div class="campo">
+        <label for="correo">Correo</label>
+        <input id="correo" type="email" formControlName="correo" autocomplete="email" [attr.aria-invalid]="campoInvalido('correo')" aria-describedby="error-correo" />
+        @if (campoInvalido('correo')) {
+          <span id="error-correo" class="error">Ingresa un correo válido.</span>
+        }
+      </div>
+
+      <div class="campo">
+        <label for="asunto">Asunto</label>
+        <select id="asunto" formControlName="asunto">
+          @for (asunto of asuntos; track asunto) {
+            <option [value]="asunto">{{ asunto }}</option>
+          }
+        </select>
+      </div>
+
+      <div class="campo">
+        <label for="mensaje">Mensaje</label>
+        <textarea id="mensaje" rows="5" formControlName="mensaje" maxlength="500" [attr.aria-invalid]="campoInvalido('mensaje')" aria-describedby="error-mensaje contador-mensaje"></textarea>
+        <small id="contador-mensaje" class="contador">{{ formulario.controls.mensaje.value.length }}/500</small>
+        @if (campoInvalido('mensaje')) {
+          <span id="error-mensaje" class="error">Cuéntanos un poco más (mínimo 10 caracteres).</span>
+        }
+      </div>
+
+      <label class="casilla">
+        <input type="checkbox" formControlName="aceptaDatos" />
+        <span>Autorizo el tratamiento de mis datos para responder este mensaje.</span>
+      </label>
+      @if (campoInvalido('aceptaDatos')) {
+        <span class="error">Debes autorizar el tratamiento de datos.</span>
+      }
+
+      <button class="btn btn-dorado btn-bloque enviar" type="submit">Enviar mensaje</button>
+    </form>
+
+    <!-- Sedes + geolocalización -->
+    <aside class="tarjeta sedes" aria-labelledby="titulo-sedes">
+      <h2 id="titulo-sedes">Nuestras sedes</h2>
+
+      <button type="button" class="btn btn-borde" (click)="buscarSedeCercana()" [disabled]="buscando()">
+        <svg class="icono" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3" /><path d="M12 2v3M12 19v3M2 12h3M19 12h3" /><circle cx="12" cy="12" r="7" /></svg>
+        {{ buscando() ? 'Buscando tu ubicación…' : 'Encontrar la sede más cercana' }}
+      </button>
+
+      <div aria-live="polite">
+        @if (errorUbicacion(); as mensaje) {
+          <p class="error">{{ mensaje }}</p>
+        }
+        @if (cercana(); as resultado) {
+          <p class="cercana">
+            Tu sede más cercana es <strong>{{ resultado.sede.nombre }}</strong>,
+            a {{ resultado.distanciaKm | number: '1.1-1' }} km en línea recta.
+          </p>
+        }
+      </div>
+
+      <div class="campo selector">
+        <label for="sede">O elige una ciudad</label>
+        <select id="sede" [value]="seleccionada().id" (change)="elegirSede($any($event.target).value)">
+          @for (sede of sedes; track sede.id) {
+            <option [value]="sede.id">{{ sede.ciudad }}</option>
+          }
+        </select>
+      </div>
+
+      <ul class="lista-sedes">
+        @for (sede of sedes; track sede.id) {
+          <li>
+            <button type="button" [class.activa]="sede.id === seleccionada().id" [attr.aria-pressed]="sede.id === seleccionada().id" (click)="seleccionada.set(sede)">
+              <strong>{{ sede.nombre }}</strong>
+              <span>{{ sede.direccion }}, {{ sede.ciudad }}</span>
+              <span class="texto-suave">{{ sede.telefono }} · {{ sede.horario }}</span>
+            </button>
+          </li>
+        }
+      </ul>
+
+      <iframe class="mapa" [src]="urlMapa()" [title]="'Mapa de ' + seleccionada().nombre" loading="lazy"></iframe>
+      <a class="btn btn-texto" [href]="urlComoLlegar(seleccionada())" target="_blank" rel="noopener noreferrer">
+        Cómo llegar a {{ seleccionada().ciudad }} ›
+      </a>
+    </aside>
+  </div>
+</section>

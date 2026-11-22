@@ -1,0 +1,111 @@
+/* ---------- Carrusel ---------- */
+.hero { border-bottom: 1px solid var(--borde); position: relative; overflow: hidden; }
+.hero__fila {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  align-items: center;
+  gap: var(--e3);
+  min-height: 340px;
+  animation: entrar 0.5s ease-out;
+}
+.hero__texto { display: flex; flex-direction: column; align-items: flex-start; gap: 0.6rem; padding-block: var(--e4); }
+.etiqueta { font-family: var(--fuente-logo); color: var(--dorado); letter-spacing: 0.08em; font-size: 1rem; }
+.hero h1 { font-size: clamp(1.8rem, 4.5vw, 2.6rem); font-weight: 500; line-height: 1.05; }
+.lema { font-family: var(--fuente-logo); color: var(--dorado); font-size: 1.5rem; letter-spacing: 0.07em; }
+.hero__texto > p:not(.lema) { color: var(--gris); max-width: 40ch; }
+.hero__img { width: 100%; max-height: 340px; object-fit: cover; }
+
+.flecha {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--borde-fuerte);
+  border-radius: 50%;
+  background: rgb(0 0 0 / 0.5);
+  color: var(--dorado);
+  font-size: 1.5rem;
+  line-height: 1;
+  opacity: 0;
+  transition: opacity var(--transition);
+}
+.flecha--izq { left: 1rem; }
+.flecha--der { right: 1rem; }
+.hero:hover .flecha,
+.flecha:focus-visible { opacity: 1; }
+
+.puntos { display: flex; gap: 0.6rem; justify-content: center; position: absolute; bottom: 0.8rem; left: 0; right: 0; }
+.puntos button { width: 9px; height: 9px; border-radius: 50%; border: 1px solid var(--dorado); background: transparent; padding: 0; }
+.puntos button.activo { background: var(--dorado); }
+
+@keyframes entrar { from { opacity: 0; } to { opacity: 1; } }
+
+.linea { border: 0; border-top: 1px solid var(--borde); margin-top: var(--e4); }
+
+/* ---------- Categorías ---------- */
+.categoria {
+  position: relative;
+  display: grid;
+  place-items: end center;
+  min-height: 117px;
+  border-radius: 11px;
+  border: 0.5px solid var(--borde-fuerte);
+  background-color: #000;
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+  transition: transform var(--transition);
+}
+.categoria::before { content: ''; position: absolute; inset: 0; background: rgb(0 0 0 / 0.65); transition: background var(--transition); }
+.categoria:hover { transform: translateY(-3px); }
+.categoria:hover::before { background: rgb(0 0 0 / 0.45); }
+.categoria span { position: relative; color: var(--dorado); font-weight: 500; padding-bottom: 1rem; }
+
+/* ---------- Marcas ---------- */
+.marca {
+  display: grid;
+  place-items: center;
+  height: 70px;
+  border-block: 0.2px solid #c7c1b4;
+  border-radius: 4px;
+  overflow: hidden;
+  transition: opacity var(--transition);
+}
+.marca:hover { opacity: 0.8; }
+.marca img { width: 100%; height: 100%; object-fit: cover; }
+
+/* ---------- Ofertas ---------- */
+.oferta {
+  position: relative;
+  background: #000;
+  border: 1px solid var(--borde);
+  border-radius: 4px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: border-color var(--transition);
+}
+.oferta:hover { border-color: var(--borde-fuerte); }
+.oferta > img { width: 100%; aspect-ratio: 1; object-fit: cover; opacity: 0.9; }
+.etiqueta-desc { position: absolute; top: 0.4rem; left: 0.4rem; z-index: 1; }
+.oferta__info { padding: 0.8rem; display: flex; flex-direction: column; gap: 0.3rem; flex: 1; }
+.oferta h3 { font-family: var(--fuente-texto); font-size: 0.8rem; font-weight: 500; }
+.oferta small { font-size: 0.7rem; color: var(--gris); }
+.precios { display: flex; flex-wrap: wrap; gap: 0.2rem 0.8rem; font-size: 0.8rem; letter-spacing: 0.12em; margin-bottom: 0.4rem; }
+.precios s { color: var(--gris); }
+.oferta .btn { font-size: 0.875rem; padding-block: 0.25rem; margin-top: auto; }
+
+/* ---------- Beneficios ---------- */
+.beneficios { margin-top: var(--e4); }
+.beneficio { display: flex; align-items: center; gap: var(--e2); }
+.beneficio h3 { color: var(--dorado); font-family: var(--fuente-texto); font-size: 0.75rem; font-weight: 500; }
+.beneficio p { font-size: 0.8rem; color: var(--gris); }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 800px) {
+  .hero__fila { grid-template-columns: 1fr; gap: 0; }
+  .hero__img { order: -1; max-height: 220px; }
+  .hero__texto { padding-block: var(--e3) var(--e4); }
+  .flecha { display: none; }
+}
