@@ -1,1 +1,16 @@
-<p>marcas works!</p>
+<section class="contenedor">
+  <h1 class="titulo-pagina">Nuestras marcas</h1>
+  <p class="subtitulo-pagina">Trabajamos solo con distribuidores autorizados: todos nuestros relojes son originales.</p>
+
+  <div class="rejilla rejilla-3">
+    @for (marca of marcas; track marca.id) {
+      <article class="tarjeta marca">
+        <div class="marca__logo"><img [src]="marca.logo" [alt]="marca.nombre" loading="lazy" /></div>
+        <h2>{{ marca.nombre }}</h2>
+        <small class="texto-suave">{{ marca.paisOrigen }} · {{ cantidad(marca.id) }} {{ cantidad(marca.id) === 1 ? 'reloj' : 'relojes' }}</small>
+        <p>{{ marca.descripcion }}</p>
+        <a class="btn btn-borde btn-pequeno" routerLink="/relojes" [queryParams]="{ marca: marca.id }">Ver relojes {{ marca.nombre }}</a>
+      </article>
+    }
+  </div>
+</section>

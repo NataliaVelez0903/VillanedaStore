@@ -1,0 +1,90 @@
+.footer {
+  border-top: 1px solid var(--color-border);
+  background: var(--color-background);
+}
+
+/* Franja ¿Tienes dudas? */
+.dudas {
+  background: linear-gradient(90deg, var(--color-surface), color-mix(in srgb, var(--color-primary-dark) 25%, var(--color-surface)));
+  border-bottom: 1px solid var(--color-border);
+}
+.dudas__fila {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding-block: var(--space-3);
+}
+.dudas h2 {
+  color: var(--color-primary);
+  font-size: 1.3rem;
+  text-transform: uppercase;
+}
+.dudas p { color: var(--color-text-muted); font-size: 0.9rem; }
+
+/* Columnas */
+.footer__rejilla {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr 1fr;
+  gap: var(--space-4);
+  padding-block: var(--space-4);
+}
+.footer__marca p {
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+  margin-top: var(--space-2);
+  max-width: 32ch;
+}
+
+h3 {
+  color: var(--color-primary);
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: var(--space-2);
+}
+ul { display: grid; gap: 0.5rem; }
+ul a,
+.enlace-boton {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  transition: color var(--transition);
+}
+ul a:hover,
+.enlace-boton:hover { color: var(--color-primary); }
+.enlace-boton {
+  background: none;
+  border: 0;
+  padding: 0;
+  text-align: left;
+}
+
+.redes { display: flex; gap: 0.5rem; }
+.redes a {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--color-border-strong);
+  border-radius: 50%;
+  color: var(--color-primary);
+}
+.redes a:hover { background: color-mix(in srgb, var(--color-primary) 12%, transparent); }
+.redes svg { width: 18px; height: 18px; }
+
+.footer__base {
+  border-top: 1px solid var(--color-border);
+  padding-block: var(--space-2);
+  text-align: center;
+  color: var(--color-text-muted);
+}
+
+@media (max-width: 900px) {
+  .footer__rejilla { grid-template-columns: 1fr 1fr; }
+  .footer__marca { grid-column: 1 / -1; }
+}
+@media (max-width: 560px) {
+  .dudas__fila { flex-direction: column; align-items: flex-start; }
+  .footer__rejilla { grid-template-columns: 1fr; gap: var(--space-3); }
+}

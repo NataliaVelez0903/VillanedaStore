@@ -1,6 +1,127 @@
-<header class="header">
-  <div class="brand">
-    <span class="brand-name">VILLANEDA</span>
-    <span class="brand-description">STORE</span>
+<header class="navbar">
+  <div class="contenedor navbar__fila">
+    <!-- Logo -->
+    <a routerLink="/inicio" class="logo" aria-label="Villaneda Store, ir al inicio">
+      <span class="logo__nombre">VILLANEDA</span>
+      <span class="logo__sub">STORE</span>
+    </a>
+
+    <!-- Menú principal (en móvil se despliega con la hamburguesa) -->
+    <nav id="menu-principal" class="menu" [class.menu--abierto]="menuAbierto()" aria-label="Menú principal">
+      <ul class="menu__lista">
+        <li class="menu__item">
+          <a routerLink="/inicio" routerLinkActive="activo" ariaCurrentWhenActive="page">Inicio</a>
+        </li>
+
+        <li class="menu__item menu__item--sub" [class.abierto]="submenuAbierto() === 'relojes'">
+          <div class="menu__cabecera">
+            <a routerLink="/relojes" routerLinkActive="activo" ariaCurrentWhenActive="page">Relojes</a>
+            <button
+              type="button"
+              class="menu__flecha"
+              aria-controls="submenu-relojes"
+              [attr.aria-expanded]="submenuAbierto() === 'relojes'"
+              aria-label="Ver categorías de relojes"
+              (click)="alternarSubmenu('relojes')"
+            >
+              <svg class="icono" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" /></svg>
+            </button>
+          </div>
+          <ul id="submenu-relojes" class="submenu">
+            @for (categoria of categorias; track categoria.slug) {
+              <li>
+                <a routerLink="/relojes" [queryParams]="{ categoria: categoria.slug }">{{ categoria.nombre }}</a>
+              </li>
+            }
+            <li><a routerLink="/relojes" class="submenu__todos">Ver todos</a></li>
+          </ul>
+        </li>
+
+        <li class="menu__item menu__item--sub" [class.abierto]="submenuAbierto() === 'marcas'">
+          <div class="menu__cabecera">
+            <a routerLink="/marcas" routerLinkActive="activo" ariaCurrentWhenActive="page">Marcas</a>
+            <button
+              type="button"
+              class="menu__flecha"
+              aria-controls="submenu-marcas"
+              [attr.aria-expanded]="submenuAbierto() === 'marcas'"
+              aria-label="Ver marcas"
+              (click)="alternarSubmenu('marcas')"
+            >
+              <svg class="icono" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" /></svg>
+            </button>
+          </div>
+          <ul id="submenu-marcas" class="submenu">
+            @for (marca of marcas; track marca.id) {
+              <li>
+                <a routerLink="/relojes" [queryParams]="{ marca: marca.id }">{{ marca.nombre }}</a>
+              </li>
+            }
+            <li><a routerLink="/marcas" class="submenu__todos">Todas las marcas</a></li>
+          </ul>
+        </li>
+
+        <li class="menu__item">
+          <a routerLink="/ofertas" routerLinkActive="activo" ariaCurrentWhenActive="page">Ofertas</a>
+        </li>
+        <li class="menu__item">
+          <a routerLink="/blog" routerLinkActive="activo" ariaCurrentWhenActive="page">Blog</a>
+        </li>
+        <li class="menu__item">
+          <a routerLink="/contacto" routerLinkActive="activo" ariaCurrentWhenActive="page">Contacto</a>
+        </li>
+      </ul>
+
+      <!-- Buscador -->
+      <form class="buscador" role="search" (submit)="buscar($event, campoBusqueda)">
+        <label for="busqueda" class="visualmente-oculto">Buscar relojes</label>
+        <input #campoBusqueda id="busqueda" type="search" placeholder="Buscar relojes…" autocomplete="off" />
+        <button type="submit" class="buscador__boton" aria-label="Buscar">
+          <svg class="icono" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="M20 20l-4-4" /></svg>
+        </button>
+      </form>
+    </nav>
+
+    <!-- Acciones: cuenta, favoritos, carrito y hamburguesa -->
+    <div class="acciones">
+      @if (auth.usuario()) {
+        <span class="saludo">Hola, <strong>{{ primerNombre() }}</strong></span>
+        <button type="button" class="btn-icono" aria-label="Cerrar sesión" title="Cerrar sesión" (click)="salir()">
+          <svg class="icono" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4h4v16h-4M10 8l-4 4 4 4M6 12h11" /></svg>
+        </button>
+      } @else {
+        <a routerLink="/iniciar-sesion" class="btn-icono" aria-label="Iniciar sesión" title="Iniciar sesión">
+          <svg class="icono" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4" /><path d="M4 21c0-4 4-6 8-6s8 2 8 6" /></svg>
+        </a>
+      }
+
+      <a routerLink="/favoritos" class="btn-icono" aria-label="Mis favoritos" title="Favoritos">
+        <svg class="icono" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z" />
+        </svg>
+      </a>
+
+      <a routerLink="/carrito" class="btn-icono carrito" [attr.aria-label]="etiquetaCarrito()" title="Carrito">
+        <svg class="icono" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12l-1 12H7L6 8zM9 8V6a3 3 0 0 1 6 0v2" /></svg>
+        @if (carrito.cantidadTotal() > 0) {
+          <span class="carrito__contador" aria-hidden="true">{{ carrito.cantidadTotal() }}</span>
+        }
+      </a>
+
+      <button
+        type="button"
+        class="btn-icono hamburguesa"
+        aria-controls="menu-principal"
+        [attr.aria-expanded]="menuAbierto()"
+        [attr.aria-label]="menuAbierto() ? 'Cerrar menú' : 'Abrir menú'"
+        (click)="alternarMenu()"
+      >
+        @if (menuAbierto()) {
+          <svg class="icono" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
+        } @else {
+          <svg class="icono" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
+        }
+      </button>
+    </div>
   </div>
 </header>

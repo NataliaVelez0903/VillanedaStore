@@ -1,0 +1,65 @@
+<footer class="footer">
+  <!-- Franja ¿Tienes dudas? -->
+  <section class="dudas" aria-labelledby="titulo-dudas">
+    <div class="contenedor dudas__fila">
+      <div>
+        <h2 id="titulo-dudas">¿Tienes dudas?</h2>
+        <p>Escríbenos y te ayudamos a elegir el reloj ideal.</p>
+      </div>
+      <a routerLink="/contacto" class="btn btn-dorado">Contáctanos</a>
+    </div>
+  </section>
+
+  <div class="contenedor footer__rejilla">
+    <div class="footer__marca">
+      <a routerLink="/inicio" class="logo" aria-label="Villaneda Store, ir al inicio">
+        <span class="logo__nombre">VILLANEDA</span>
+        <span class="logo__sub">STORE</span>
+      </a>
+      <p>Relojes originales con estilo, calidad y garantía. Envíos a todo Colombia.</p>
+    </div>
+
+    <nav aria-labelledby="titulo-tienda">
+      <h3 id="titulo-tienda">Tienda</h3>
+      <ul>
+        <li><a routerLink="/relojes">Relojes</a></li>
+        <li><a routerLink="/marcas">Marcas</a></li>
+        <li><a routerLink="/ofertas">Ofertas</a></li>
+        <li><a routerLink="/blog">Blog</a></li>
+      </ul>
+    </nav>
+
+    <nav aria-labelledby="titulo-ayuda">
+      <h3 id="titulo-ayuda">Ayuda</h3>
+      <ul>
+        <li><a routerLink="/contacto">Contacto y sedes</a></li>
+        <li><a routerLink="/iniciar-sesion">Mi cuenta</a></li>
+        <li><a routerLink="/favoritos">Favoritos</a></li>
+        <li>
+          <button type="button" class="enlace-boton" (click)="abrirPreferenciasCookies()">
+            Preferencias de cookies
+          </button>
+        </li>
+      </ul>
+    </nav>
+
+    <div>
+      <h3>Síguenos</h3>
+      <ul class="redes">
+        @for (red of redes; track red.nombre) {
+          <li>
+            <a [href]="red.url" target="_blank" rel="noopener noreferrer" [attr.aria-label]="red.nombre + ' (abre en una pestaña nueva)'">
+              <svg class="icono" viewBox="0 0 24 24" aria-hidden="true"><path [attr.d]="red.icono" /></svg>
+            </a>
+          </li>
+        }
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer__base">
+    <div class="contenedor">
+      <small>© {{ anio }} Villaneda Store. Todos los derechos reservados.</small>
+    </div>
+  </div>
+</footer>

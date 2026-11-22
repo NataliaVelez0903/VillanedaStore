@@ -1,0 +1,16 @@
+<!-- La zona aria-live siempre existe para que los lectores de pantalla anuncien cada mensaje. -->
+<div class="zona" aria-live="polite" aria-atomic="true">
+  @if (notificacion.actual(); as aviso) {
+    <div class="toast" [class]="'toast--' + aviso.tipo" [attr.role]="aviso.tipo === 'error' ? 'alert' : 'status'">
+      <span class="toast__icono" aria-hidden="true">
+        @switch (aviso.tipo) {
+          @case ('exito') { ✓ }
+          @case ('error') { ! }
+          @default { i }
+        }
+      </span>
+      <p>{{ aviso.mensaje }}</p>
+      <button type="button" class="toast__cerrar" aria-label="Cerrar mensaje" (click)="notificacion.cerrar()">×</button>
+    </div>
+  }
+</div>

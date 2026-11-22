@@ -1,5 +1,13 @@
+<a class="saltar" [routerLink]="[]" fragment="contenido">Saltar al contenido</a>
+
 <app-navbar />
 
-<main>
+<main id="contenido" tabindex="-1">
   <router-outlet />
 </main>
+
+<app-footer />
+
+<app-modal-producto />
+<app-notificacion-toast />
+<app-banner-cookies />

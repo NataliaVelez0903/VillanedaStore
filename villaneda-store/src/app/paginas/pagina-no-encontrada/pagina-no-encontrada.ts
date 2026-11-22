@@ -1,9 +1,17 @@
-import { Component } from '@angular/core';
+import { Location } from '@angular/common';
+import { Component, inject } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
-  imports: [],
   selector: 'app-pagina-no-encontrada',
-  styleUrl: './pagina-no-encontrada.css',
+  imports: [RouterLink],
   templateUrl: './pagina-no-encontrada.html',
+  styleUrl: './pagina-no-encontrada.css',
 })
-export class PaginaNoEncontrada {}
+export class PaginaNoEncontrada {
+  private readonly location = inject(Location);
+
+  protected volver(): void {
+    this.location.back();
+  }
+}

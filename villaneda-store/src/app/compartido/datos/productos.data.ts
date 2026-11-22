@@ -1,0 +1,93 @@
+import { Producto } from '../modelos/producto';
+
+/**
+ * Catálogo de ejemplo. Los cuatro primeros son las "Ofertas destacadas"
+ * del Inicio (ver IDS_DESTACADOS en ProductosService).
+ * Imágenes en public/img/productos/.
+ */
+export const PRODUCTOS: Producto[] = [
+  {
+    id: 'curren-8023',
+    nombre: 'Curren 8023 Cronógrafo',
+    marca: 'curren',
+    descripcion: 'Cronógrafo de cuarzo con caja de acero, correa de malla y resistencia al agua 30 m.',
+    precio: 189900,
+    imagen: 'img/productos/curren-8023.png',
+    categoria: 'hombre',
+    esNuevo: false,
+    descuentoPorcentaje: 20,
+  },
+  {
+    id: 'salco-ips',
+    nombre: 'Salco IPS Dorado',
+    marca: 'salco',
+    descripcion: 'Acabado dorado IPS, esfera minimalista y cierre desplegable.',
+    precio: 249900,
+    imagen: 'img/productos/salco-ips.png',
+    categoria: 'mujer',
+    esNuevo: true,
+    descuentoPorcentaje: 15,
+  },
+  {
+    id: 'gforce-h4482',
+    nombre: 'G-Force H4482 Digital',
+    marca: 'gforce',
+    descripcion: 'Digital deportivo con luz, alarma, cronómetro y resistencia al agua 50 m.',
+    precio: 159900,
+    imagen: 'img/productos/gforce-h4482.png',
+    categoria: 'deportivo',
+    esNuevo: false,
+    descuentoPorcentaje: 25,
+  },
+  {
+    id: 'qq-c10a047y',
+    nombre: 'Q&Q C10A-047Y',
+    marca: 'qq',
+    descripcion: 'Análogo liviano con correa de resina, ideal para el día a día.',
+    precio: 99900,
+    imagen: 'img/productos/qq-c10a047y.png',
+    categoria: 'unisex',
+    esNuevo: false,
+    descuentoPorcentaje: 10,
+  },
+  {
+    id: 'casio-mtp-v002',
+    nombre: 'Casio MTP-V002',
+    marca: 'casio',
+    descripcion: 'Clásico análogo con correa de cuero y esfera blanca.',
+    precio: 179900,
+    imagen: 'img/productos/casio-mtp-v002.png',
+    categoria: 'hombre',
+    esNuevo: true,
+  },
+  {
+    id: 'casio-la680',
+    nombre: 'Casio LA680 Vintage',
+    marca: 'casio',
+    descripcion: 'Digital retro en tono dorado con alarma y luz.',
+    precio: 219900,
+    imagen: 'img/productos/casio-la680.png',
+    categoria: 'mujer',
+    esNuevo: false,
+  },
+  {
+    id: 'curren-8355',
+    nombre: 'Curren 8355 Acero',
+    marca: 'curren',
+    descripcion: 'Esfera negra con detalles dorados y correa de acero inoxidable.',
+    precio: 209900,
+    imagen: 'img/productos/curren-8355.png',
+    categoria: 'hombre',
+    esNuevo: true,
+  },
+  {
+    id: 'gforce-a179',
+    nombre: 'G-Force A179 Sport',
+    marca: 'gforce',
+    descripcion: 'Análogo-digital deportivo con correa de silicona.',
+    precio: 139900,
+    imagen: 'img/productos/gforce-a179.png',
+    categoria: 'deportivo',
+    esNuevo: true,
+  },
+];

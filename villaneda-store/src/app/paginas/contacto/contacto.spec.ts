@@ -2,20 +2,19 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Contacto } from './contacto';
 
 describe('Contacto', () => {
-  let component: Contacto;
   let fixture: ComponentFixture<Contacto>;
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [Contacto],
-    }).compileComponents();
-
+    await TestBed.configureTestingModule({ imports: [Contacto] }).compileComponents();
     fixture = TestBed.createComponent(Contacto);
-    component = fixture.componentInstance;
     await fixture.whenStable();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('debe crearse', () => {
+    expect(fixture.componentInstance).toBeTruthy();
+  });
+
+  it('debe listar las 4 sedes', () => {
+    expect(fixture.nativeElement.querySelectorAll('.lista-sedes li').length).toBe(4);
   });
 });
