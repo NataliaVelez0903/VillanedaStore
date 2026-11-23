@@ -1,2 +1,119 @@
-<h1>Villaneda Store</h1>
-<p>Relojes que definen tu tiempo.</p>
+<!-- Carrusel -->
+<section
+  class="hero"
+  aria-roledescription="carrusel"
+  aria-label="Destacados"
+  (mouseenter)="detenerCarrusel()"
+  (mouseleave)="iniciarCarrusel()"
+  (focusin)="detenerCarrusel()"
+  (focusout)="iniciarCarrusel()"
+>
+  @for (slide of slides; track $index) {
+    @if ($index === actual()) {
+      <div
+        class="contenedor hero__fila"
+        role="group"
+        aria-roledescription="diapositiva"
+        [attr.aria-label]="($index + 1) + ' de ' + slides.length"
+      >
+        <div class="hero__texto">
+          <span class="etiqueta">VILLANEDA STORE</span>
+          <h1>{{ slide.titulo1 }}<br />{{ slide.titulo2 }}</h1>
+          <p class="lema">{{ slide.lema }}</p>
+          <p>{{ slide.texto }}</p>
+          <a routerLink="/relojes" class="btn btn-relleno">Ver colección</a>
+        </div>
+        <img class="hero__img" [src]="slide.imagen" alt="Reloj destacado de la colección" />
+      </div>
+    }
+  }
+
+  <button type="button" class="flecha flecha--izq" aria-label="Diapositiva anterior" (click)="anterior()">‹</button>
+  <button type="button" class="flecha flecha--der" aria-label="Diapositiva siguiente" (click)="siguiente()">›</button>
+
+  <div class="puntos">
+    @for (slide of slides; track $index) {
+      <button
+        type="button"
+        [class.activo]="$index === actual()"
+        [attr.aria-label]="'Ir a la diapositiva ' + ($index + 1)"
+        [attr.aria-current]="$index === actual() ? 'true' : null"
+        (click)="irA($index)"
+      ></button>
+    }
+  </div>
+</section>
+
+<!-- Categorías -->
+<section class="contenedor" aria-labelledby="titulo-categorias">
+  <h2 id="titulo-categorias" class="titulo-seccion">Categorías principales</h2>
+  <div class="rejilla rejilla-4">
+    @for (categoria of categorias; track categoria.slug) {
+      <a
+        class="categoria"
+        routerLink="/relojes"
+        [queryParams]="{ categoria: categoria.slug }"
+        [style.background-image]="'url(' + categoria.imagen + ')'"
+      >
+        <span>{{ categoria.nombre }}</span>
+      </a>
+    }
+  </div>
+</section>
+
+<hr class="linea" />
+
+<!-- Marcas -->
+<section class="contenedor" aria-labelledby="titulo-marcas">
+  <h2 id="titulo-marcas" class="titulo-seccion">Marcas destacadas</h2>
+  <div class="rejilla rejilla-5">
+    @for (marca of marcas; track marca.id) {
+      <a class="marca" routerLink="/relojes" [queryParams]="{ marca: marca.id }" [attr.aria-label]="'Ver relojes ' + marca.nombre">
+        <img [src]="marca.logo" [alt]="marca.nombre" loading="lazy" />
+      </a>
+    }
+  </div>
+  <div class="centro"><a routerLink="/marcas" class="btn btn-borde">Ver todas las marcas</a></div>
+</section>
+
+<!-- Ofertas -->
+<section class="contenedor" aria-labelledby="titulo-ofertas">
+  <h2 id="titulo-ofertas" class="titulo-seccion">Ofertas destacadas</h2>
+  <div class="rejilla rejilla-4">
+    @for (producto of ofertas; track producto.id) {
+      <article class="oferta">
+        @if (producto.descuentoPorcentaje) {
+          <span class="insignia etiqueta-desc">-{{ producto.descuentoPorcentaje }}%</span>
+        }
+        <img [src]="producto.imagen" [alt]="producto.nombre" loading="lazy" />
+        <div class="oferta__info">
+          <h3>{{ producto.nombre }}</h3>
+          <small>{{ nombreMarca(producto.marca) }}</small>
+          <div class="precios">
+            <span>{{ precioFinal(producto) | currency: 'COP' : 'symbol-narrow' : '1.0-0' }}</span>
+            @if (producto.descuentoPorcentaje) {
+              <s>{{ producto.precio | currency: 'COP' : 'symbol-narrow' : '1.0-0' }}</s>
+            }
+          </div>
+          <button type="button" class="btn btn-borde" (click)="verOferta(producto)">Ver oferta</button>
+        </div>
+      </article>
+    }
+  </div>
+  <div class="centro"><a routerLink="/ofertas" class="btn btn-borde">Ver todas las ofertas</a></div>
+</section>
+
+<!-- Beneficios -->
+<section class="contenedor beneficios" aria-label="Beneficios de comprar en Villaneda">
+  <div class="rejilla rejilla-3">
+    @for (beneficio of beneficios; track beneficio.titulo) {
+      <div class="tarjeta beneficio">
+        <img [src]="beneficio.icono" alt="" width="49" height="55" />
+        <div>
+          <h3>{{ beneficio.titulo }}</h3>
+          <p>{{ beneficio.texto }}</p>
+        </div>
+      </div>
+    }
+  </div>
+</section>

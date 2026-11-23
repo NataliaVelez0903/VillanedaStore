@@ -1,24 +1,272 @@
-/* You can add global styles to this file, and also import other style files */
+/* ==========================================================================
+   Villaneda Store — estilos globales
+   Variables (colores, fuentes, espacios) y clases compartidas.
+   ========================================================================== */
 :root {
+  color-scheme: dark;
+
+  /* Colores */
   --color-background: #080808;
   --color-surface: #121212;
   --color-primary: #d4af37;
+  --color-primary-dark: #976f1c;   /* botón "Ver colección", subtítulo STORE */
   --color-text: #f5f5f5;
   --color-text-muted: #b3b3b3;
   --color-border: #343024;
+  --color-border-strong: color-mix(in srgb, var(--color-primary) 80%, transparent);
+  --color-danger: #a00e0f;         /* etiqueta de descuento */
+  --color-error: #ff6b6b;
+  --color-success: #4caf7d;
+
+  /* Tipografía */
+  --font-body: 'Jost', Arial, Helvetica, sans-serif;
+  --font-heading: 'Oswald', Arial, Helvetica, sans-serif;
+  --font-logo: 'Jockey One', Arial, Helvetica, sans-serif;
+
+  /* Espacios y medidas */
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2.5rem;
+  --space-5: 4rem;
+  --radius: 4px;
+  --radius-lg: 9px;
+  --max-width: 1100px;
+  --navbar-height: 72px;
+  --shadow: 0 10px 30px rgb(0 0 0 / 0.5);
+  --transition: 0.2s ease;
+
+  /* Capas */
+  --z-navbar: 100;
+  --z-banner: 200;
+  --z-modal: 300;
+  --z-toast: 400;
+
+  /* Alias en español (los usan los componentes) */
+  --negro: var(--color-background);
+  --fondo-tarjeta: var(--color-surface);
+  --dorado: var(--color-primary);
+  --dorado-oscuro: var(--color-primary-dark);
+  --rojo: var(--color-danger);
+  --blanco: var(--color-text);
+  --gris: var(--color-text-muted);
+  --borde: var(--color-border);
+  --borde-fuerte: var(--color-border-strong);
+  --fuente-texto: var(--font-body);
+  --fuente-titulo: var(--font-heading);
+  --fuente-logo: var(--font-logo);
+  --e1: var(--space-1);
+  --e2: var(--space-2);
+  --e3: var(--space-3);
+  --e4: var(--space-4);
+  --e5: var(--space-5);
+  --radio: var(--radius);
+  --radio-lg: var(--radius-lg);
+  --ancho-max: var(--max-width);
 }
 
+/* ---------- Base ---------- */
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--navbar-height) + 1rem);
+}
+
 body {
   margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-body);
   font-size: 16px;
   line-height: 1.5;
   background-color: var(--color-background);
   color: var(--color-text);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, p, ul, ol, figure { margin: 0; padding: 0; }
+h1, h2, h3, h4 { font-family: var(--font-heading); font-weight: 500; letter-spacing: 0.02em; }
+ul, ol { list-style: none; }
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; cursor: pointer; }
+input, textarea, select { font: inherit; }
+
+::selection { background: var(--color-primary); color: var(--color-background); }
+
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* ---------- Utilidades ---------- */
+.contenedor { width: min(100% - 2rem, var(--max-width)); margin-inline: auto; }
+
+.visualmente-oculto {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0);
+  white-space: nowrap; border: 0;
+}
+
+.titulo-seccion {
+  color: var(--color-primary);
+  text-align: center;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-block: var(--space-4) var(--space-3);
+}
+
+.titulo-pagina {
+  color: var(--color-primary);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  text-transform: uppercase;
+  text-align: center;
+  margin-block: var(--space-4) var(--space-1);
+}
+
+.subtitulo-pagina {
+  color: var(--color-text-muted);
+  text-align: center;
+  max-width: 60ch;
+  margin: 0 auto var(--space-4);
+}
+
+.centro { text-align: center; margin-top: var(--space-3); }
+.texto-dorado { color: var(--color-primary); }
+.texto-suave { color: var(--color-text-muted); }
+
+/* ---------- Íconos SVG de trazo ---------- */
+svg.icono {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ---------- Logo (navbar y footer) ---------- */
+.logo { display: inline-flex; flex-direction: column; flex-shrink: 0; line-height: 1; }
+.logo__nombre {
+  font-family: var(--font-logo);
+  color: var(--color-primary);
+  font-size: 1.45rem;
+  letter-spacing: 0.08em;
+}
+.logo__sub {
+  color: var(--color-primary-dark);
+  font-size: 0.65rem;
+  letter-spacing: 0.55em;
+  text-align: center;
+  margin-top: 2px;
+}
+
+/* ---------- Botones ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.45rem 1.2rem;
+  border-radius: var(--radius);
+  font-weight: 500;
+  text-align: center;
+  border: 1px solid transparent;
+  background: transparent;
+  transition: opacity var(--transition), background var(--transition), color var(--transition);
+}
+.btn:hover { opacity: 0.85; }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn-relleno { background: var(--color-primary-dark); color: var(--color-background); }
+.btn-dorado  { background: var(--color-primary); color: var(--color-background); }
+.btn-borde   { border-color: var(--color-primary); color: var(--color-primary); }
+.btn-borde:hover { background: color-mix(in srgb, var(--color-primary) 12%, transparent); opacity: 1; }
+.btn-texto   { color: var(--color-primary); padding-inline: 0; }
+.btn-pequeno { font-size: 0.85rem; padding: 0.3rem 0.8rem; }
+.btn-bloque  { width: 100%; }
+
+.btn-icono {
+  display: inline-grid;
+  place-items: center;
+  width: 40px; height: 40px;
+  border: 0; border-radius: 50%;
+  background: transparent;
+  color: var(--color-primary);
+  transition: background var(--transition);
+}
+.btn-icono:hover { background: color-mix(in srgb, var(--color-primary) 12%, transparent); }
+.btn-icono svg { width: 22px; height: 22px; }
+
+/* ---------- Tarjeta ---------- */
+.tarjeta {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-2);
+}
+
+/* ---------- Etiquetas ---------- */
+.insignia {
+  display: inline-block;
+  padding: 0.1rem 0.5rem;
+  border-radius: 3px;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  background: var(--color-danger);
+  color: var(--color-text);
+}
+.insignia-dorada { background: var(--color-primary); color: var(--color-background); }
+
+/* ---------- Formularios ---------- */
+.campo { display: flex; flex-direction: column; gap: 0.3rem; margin-bottom: var(--space-2); }
+.campo label { color: var(--color-primary); font-size: 0.85rem; }
+.campo input,
+.campo textarea,
+.campo select {
+  background: var(--color-background);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 0.6rem 0.8rem;
+  font: inherit;
+  width: 100%;
+}
+.campo textarea { resize: vertical; min-height: 120px; }
+.campo input:focus,
+.campo textarea:focus,
+.campo select:focus { outline: 2px solid var(--color-primary); outline-offset: 1px; }
+.campo input[aria-invalid='true'],
+.campo textarea[aria-invalid='true'] { border-color: var(--color-error); }
+.campo .error,
+.error { color: var(--color-error); font-size: 0.8rem; }
+
+.casilla { display: flex; align-items: flex-start; gap: 0.5rem; font-size: 0.85rem; }
+.casilla input { accent-color: var(--color-primary); margin-top: 0.25rem; }
+
+/* ---------- Rejillas responsive ---------- */
+.rejilla { display: grid; gap: var(--space-2); }
+.rejilla-2 { grid-template-columns: repeat(2, 1fr); }
+.rejilla-3 { grid-template-columns: repeat(3, 1fr); }
+.rejilla-4 { grid-template-columns: repeat(4, 1fr); }
+.rejilla-5 { grid-template-columns: repeat(5, 1fr); }
+
+@media (max-width: 900px) {
+  .rejilla-4, .rejilla-5 { grid-template-columns: repeat(2, 1fr); }
+  .rejilla-3 { grid-template-columns: 1fr; }
+}
+@media (max-width: 520px) {
+  .rejilla-2, .rejilla-4, .rejilla-5 { grid-template-columns: 1fr 1fr; }
+}
+
+/* ---------- Movimiento reducido ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }

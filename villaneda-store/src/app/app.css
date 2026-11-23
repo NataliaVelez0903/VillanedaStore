@@ -1,0 +1,26 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+main {
+  flex: 1;
+  outline: none;
+  padding-bottom: var(--space-5);
+}
+
+/* Enlace "Saltar al contenido": solo se ve al navegar con teclado. */
+.saltar {
+  position: absolute;
+  left: 1rem;
+  top: -100px;
+  z-index: var(--z-toast);
+  background: var(--color-primary);
+  color: var(--color-background);
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius);
+  font-weight: 500;
+}
+.saltar:focus { top: 1rem; }
