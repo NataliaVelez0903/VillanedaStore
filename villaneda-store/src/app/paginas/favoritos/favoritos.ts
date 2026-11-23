@@ -1,12 +1,24 @@
 import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import {
+  CdkDrag,
+  CdkDragDrop,
+  CdkDragHandle,
+  CdkDropList,
+} from '@angular/cdk/drag-drop';
 import { TarjetaProducto } from '../../compartido/componentes/tarjeta-producto/tarjeta-producto';
 import { Producto } from '../../compartido/modelos/producto';
 import { FavoritosService } from '../../nucleo/servicios/favoritos.service';
 import { ModalProductoService } from '../../nucleo/servicios/modal-producto.service';
 
 @Component({
-  imports: [RouterLink, TarjetaProducto],
+  imports: [
+    RouterLink,
+    TarjetaProducto,
+    CdkDrag,
+    CdkDragHandle,
+    CdkDropList,
+  ],
   selector: 'app-favoritos',
   styleUrl: './favoritos.css',
   templateUrl: './favoritos.html',
@@ -31,5 +43,19 @@ export class Favoritos {
     }
 
     this.favoritosService.reordenar(indice, destino);
+  }
+
+  soltarFavorito(evento: CdkDragDrop<Producto[]>): void {
+    if (
+      evento.previousContainer !== evento.container ||
+      evento.previousIndex === evento.currentIndex
+    ) {
+      return;
+    }
+
+    this.favoritosService.reordenar(
+      evento.previousIndex,
+      evento.currentIndex,
+    );
   }
 }
