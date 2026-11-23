@@ -22,4 +22,14 @@ export class Favoritos {
       this.favoritosService.alternar(producto);
     }
   }
+
+  moverFavorito(indice: number, desplazamiento: -1 | 1): void {
+    const destino = indice + desplazamiento;
+
+    if (destino < 0 || destino >= this.productos().length) {
+      return;
+    }
+
+    this.favoritosService.reordenar(indice, destino);
+  }
 }

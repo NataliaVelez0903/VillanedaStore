@@ -1,17 +1,40 @@
 <section class="contenedor" aria-labelledby="titulo-favoritos">
   <h1 id="titulo-favoritos" class="titulo-pagina">Mis favoritos</h1>
   <p class="subtitulo-pagina">
-    Los relojes que guardaste para consultar después.
+    Guarda tus relojes preferidos y organiza el orden en que aparecen.
   </p>
 
   @if (productos().length > 0) {
     <div class="rejilla rejilla-3">
-      @for (producto of productos(); track producto.id) {
+      @for (producto of productos(); track producto.id; let indice = $index) {
         <div>
           <app-tarjeta-producto
             [producto]="producto"
             (verDetalle)="modal.abrir($event)"
           />
+
+          <div
+            role="group"
+            [attr.aria-label]="'Cambiar posición de ' + producto.nombre"
+          >
+            <button
+              class="btn btn-borde"
+              type="button"
+              [disabled]="indice === 0"
+              (click)="moverFavorito(indice, -1)"
+            >
+              Mover antes
+            </button>
+
+            <button
+              class="btn btn-borde"
+              type="button"
+              [disabled]="indice === productos().length - 1"
+              (click)="moverFavorito(indice, 1)"
+            >
+              Mover después
+            </button>
+          </div>
 
           <button
             class="btn btn-borde btn-bloque"
