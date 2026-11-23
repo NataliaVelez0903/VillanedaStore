@@ -1,0 +1,193 @@
+.catalogo {
+  padding-bottom: var(--e5);
+}
+
+.catalogo__disposicion {
+  display: grid;
+  grid-template-columns: 220px 1fr 190px;
+  gap: var(--e3);
+  align-items: start;
+}
+
+/* ---------- Filtros ---------- */
+.filtros {
+  position: sticky;
+  top: calc(var(--navbar-height) + var(--e2));
+}
+
+fieldset {
+  border: 0;
+  margin: 0 0 var(--e2);
+  padding: 0;
+}
+
+legend {
+  color: var(--dorado);
+  font-size: 0.85rem;
+  margin-bottom: var(--e1);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+.chip {
+  padding: 0.2rem 0.7rem;
+  border: 1px solid var(--borde);
+  border-radius: 20px;
+  background: none;
+  font-size: 0.85rem;
+}
+
+.chip.activo {
+  background: var(--dorado);
+  border-color: var(--dorado);
+  color: var(--negro);
+}
+
+.busqueda {
+  margin-bottom: var(--e2);
+  font-size: 0.85rem;
+}
+
+/* ---------- Resultados ---------- */
+.ayuda {
+  margin-bottom: var(--e2);
+  font-size: 0.85rem;
+}
+
+.rejilla-productos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: var(--e2);
+}
+
+.arrastrable {
+  cursor: grab;
+}
+
+.vacio {
+  display: grid;
+  justify-items: center;
+  gap: var(--e2);
+  padding: var(--e4);
+  text-align: center;
+}
+
+/* ---------- Zona del carrito (destino) ---------- */
+.zona-carrito {
+  position: sticky;
+  top: calc(var(--navbar-height) + var(--e2));
+  display: grid;
+  justify-items: center;
+  gap: var(--e1);
+  padding: var(--e3) var(--e2);
+  text-align: center;
+  background: var(--fondo-tarjeta);
+  border: 2px dashed var(--borde);
+  border-radius: var(--radio-lg);
+  transition: border-color var(--transition), background var(--transition), transform var(--transition);
+}
+
+.zona-carrito svg {
+  width: 44px;
+  height: 44px;
+  color: var(--dorado);
+}
+
+.zona-carrito__titulo,
+.zona-carrito__resumen {
+  font-size: 0.85rem;
+}
+
+/* ---------- Retroalimentación del arrastre (clases que pone Angular CDK) ---------- */
+
+/* Apenas empieza a arrastrar: la zona se ilumina */
+.zona-carrito.cdk-drop-list-receiving {
+  border-color: var(--dorado);
+}
+
+/* El reloj está encima de la zona */
+.zona-carrito.cdk-drop-list-dragging {
+  background: color-mix(in srgb, var(--dorado) 15%, transparent);
+  transform: scale(1.04);
+}
+
+/* Al soltar: pulso verde */
+.zona-carrito.animado {
+  animation: pulso 0.6s ease;
+}
+
+@keyframes pulso {
+  50% {
+    transform: scale(1.08);
+    border-color: var(--color-success);
+  }
+}
+
+/* Copia que sigue al cursor mientras se arrastra */
+.cdk-drag-preview {
+  border-radius: var(--radio);
+  box-shadow: 0 12px 30px color-mix(in srgb, var(--dorado) 35%, transparent);
+}
+
+/* Hueco que queda en la lista mientras se arrastra */
+.cdk-drag-placeholder {
+  opacity: 0.3;
+}
+
+/* Dentro de la zona del carrito no se muestra la copia */
+.zona-carrito .cdk-drag-placeholder {
+  display: none;
+}
+
+/* ---------- Tableta: la zona del carrito queda fija abajo ---------- */
+@media (max-width: 1024px) {
+  .catalogo__disposicion {
+    grid-template-columns: 200px 1fr;
+  }
+
+  .zona-carrito {
+    position: fixed;
+    top: auto;
+    left: var(--e2);
+    right: var(--e2);
+    bottom: var(--e2);
+    z-index: var(--z-navbar);
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    padding: var(--e1) var(--e2);
+    text-align: left;
+  }
+
+  .zona-carrito svg {
+    width: 30px;
+    height: 30px;
+  }
+
+  .resultados {
+    padding-bottom: 90px;
+  }
+}
+
+/* ---------- Celular ---------- */
+@media (max-width: 700px) {
+  .catalogo__disposicion {
+    grid-template-columns: 1fr;
+  }
+
+  .filtros {
+    position: static;
+  }
+
+  .rejilla-productos {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--e1);
+  }
+
+  .zona-carrito__titulo {
+    display: none;
+  }
+}

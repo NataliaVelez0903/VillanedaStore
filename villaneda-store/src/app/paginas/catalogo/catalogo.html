@@ -1,1 +1,85 @@
-<p>catalogo works!</p>
+<section class="contenedor catalogo" aria-labelledby="titulo-catalogo">
+  <h1 id="titulo-catalogo" class="titulo-pagina">Relojes</h1>
+  <p class="subtitulo-pagina" aria-live="polite">{{ productos().length }} relojes encontrados</p>
+
+  <div class="catalogo__disposicion">
+    <!-- Filtros -->
+    <aside class="tarjeta filtros" aria-label="Filtros">
+      <fieldset>
+        <legend>Categoría</legend>
+        <div class="chips">
+          <button type="button" class="chip" [class.activo]="!categoria()" (click)="cambiarFiltro('categoria', null)">Todas</button>
+          @for (opcion of categorias; track opcion.valor) {
+            <button type="button" class="chip" [class.activo]="categoria() === opcion.valor"
+              [attr.aria-pressed]="categoria() === opcion.valor" (click)="cambiarFiltro('categoria', opcion.valor)">
+              {{ opcion.etiqueta }}
+            </button>
+          }
+        </div>
+      </fieldset>
+
+      <div class="campo">
+        <label for="filtro-marca">Marca</label>
+        <select id="filtro-marca" [ngModel]="marca() ?? ''" (ngModelChange)="cambiarFiltro('marca', $event)">
+          <option value="">Todas las marcas</option>
+          @for (opcion of marcas; track opcion.id) {
+            <option [value]="opcion.id">{{ opcion.nombre }}</option>
+          }
+        </select>
+      </div>
+
+      <div class="campo">
+        <label for="filtro-orden">Ordenar por</label>
+        <select id="filtro-orden" [ngModel]="orden()" (ngModelChange)="orden.set($event)">
+          <option value="relevancia">Relevancia</option>
+          <option value="precio-asc">Menor precio</option>
+          <option value="precio-desc">Mayor precio</option>
+          <option value="nombre">Nombre (A-Z)</option>
+        </select>
+      </div>
+
+      @if (buscar()) {
+        <p class="busqueda">
+          Búsqueda: <strong>"{{ buscar() }}"</strong>
+          <button type="button" class="btn-texto" aria-label="Quitar búsqueda" (click)="cambiarFiltro('buscar', null)">×</button>
+        </p>
+      }
+      @if (hayFiltros()) {
+        <button type="button" class="btn btn-borde btn-bloque" (click)="limpiarFiltros()">Limpiar filtros</button>
+      }
+    </aside>
+
+    <!-- Resultados: lista de origen del arrastre -->
+    <div class="resultados">
+      <p class="ayuda texto-suave">Arrastra un reloj hasta el carrito o usa el botón "Agregar al carrito".</p>
+
+      @if (productos().length > 0) {
+        <div class="rejilla-productos" cdkDropList id="lista-catalogo" cdkDropListOrientation="mixed"
+          cdkDropListSortingDisabled [cdkDropListData]="productos()" [cdkDropListConnectedTo]="['zona-carrito']">
+          @for (producto of productos(); track producto.id) {
+            <div class="arrastrable" cdkDrag [cdkDragData]="producto" [cdkDragStartDelay]="{ touch: 200, mouse: 0 }">
+              <app-tarjeta-producto [producto]="producto" [mostrarAgregar]="true"
+                (verDetalle)="modal.abrir($event)" (agregar)="agregarAlCarrito($event)" />
+            </div>
+          }
+        </div>
+      } @else {
+        <div class="tarjeta vacio">
+          <p>No encontramos relojes con esos filtros.</p>
+          <button type="button" class="btn btn-dorado" (click)="limpiarFiltros()">Ver todos los relojes</button>
+        </div>
+      }
+    </div>
+
+    <!-- Zona del carrito: destino del arrastre -->
+    <aside class="zona-carrito" cdkDropList id="zona-carrito" [class.animado]="carritoAnimado()"
+      (cdkDropListDropped)="soltarEnCarrito($event)" aria-label="Zona para soltar relojes en el carrito">
+      <svg class="icono" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 7h12l-1 13H7L6 7z" /><path d="M9 7a3 3 0 0 1 6 0" /></svg>
+      <p class="zona-carrito__titulo">Suelta aquí para agregar</p>
+      <p class="zona-carrito__resumen">
+        {{ carrito.cantidadTotal() }} productos · <strong>{{ carrito.total() | precio }}</strong>
+      </p>
+      <a class="btn btn-dorado" routerLink="/carrito">Ver carrito</a>
+    </aside>
+  </div>
+</section>

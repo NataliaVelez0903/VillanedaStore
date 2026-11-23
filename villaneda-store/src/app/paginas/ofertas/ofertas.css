@@ -1,0 +1,23 @@
+.ofertas {
+  padding-bottom: var(--e5);
+}
+
+.banner-ofertas {
+  margin: var(--e4) 0;
+  padding: var(--e3) var(--e2) var(--e4);
+  text-align: center;
+  border: 1px solid var(--borde-fuerte);
+  border-radius: var(--radio-lg);
+  background: linear-gradient(135deg, var(--fondo-tarjeta), color-mix(in srgb, var(--dorado) 12%, transparent));
+}
+
+.banner-ofertas__sobretitulo {
+  color: var(--gris);
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.banner-ofertas .titulo-pagina {
+  margin-block: var(--e1);
+}
