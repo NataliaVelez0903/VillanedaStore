@@ -1,9 +1,9 @@
-<section aria-labelledby="titulo-registro">
+<section class="registro" aria-labelledby="titulo-registro">
   <h1 id="titulo-registro">Crear cuenta</h1>
   <p>Regístrate en Villaneda Store.</p>
 
   <form [formGroup]="formulario" (ngSubmit)="registrar()" novalidate>
-    <div>
+    <div class="campo">
       <label for="nombre">Nombre completo</label>
       <input
         id="nombre"
@@ -19,7 +19,7 @@
       }
     </div>
 
-    <div>
+    <div class="campo">
       <label for="correo">Correo electrónico</label>
       <input
         id="correo"
@@ -35,7 +35,7 @@
       }
     </div>
 
-    <div>
+    <div class="campo">
       <label for="contrasena">Contraseña</label>
       <input
         id="contrasena"
@@ -51,7 +51,7 @@
       }
     </div>
 
-    <div>
+    <div class="campo">
       <label for="confirmar-contrasena">Confirmar contraseña</label>
       <input
         id="confirmar-contrasena"
@@ -79,6 +79,7 @@
     }
 
     <button
+      class="btn btn-dorado btn-bloque"
       type="submit"
       [disabled]="formulario.invalid || guardando()"
     >
