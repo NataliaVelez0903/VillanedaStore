@@ -1,1 +1,74 @@
-<p>favoritos works!</p>
+<section class="contenedor" aria-labelledby="titulo-favoritos">
+  <h1 id="titulo-favoritos" class="titulo-pagina">Mis favoritos</h1>
+  <p class="subtitulo-pagina">
+    Arrastra desde la zona «Arrastrar» o usa los botones para ordenar tus relojes.
+  </p>
+
+  @if (productos().length > 0) {
+    <div
+      class="lista-favoritos"
+      cdkDropList
+      cdkDropListOrientation="mixed"
+      [cdkDropListData]="productos()"
+      (cdkDropListDropped)="soltarFavorito($event)"
+    >
+      @for (producto of productos(); track producto.id; let indice = $index) {
+        <div
+          class="favorito"
+          cdkDrag
+          [cdkDragData]="producto"
+          [cdkDragStartDelay]="{ touch: 200, mouse: 0 }"
+        >
+          <div class="agarre" cdkDragHandle aria-hidden="true">
+            ⠿ Arrastrar
+          </div>
+
+          <app-tarjeta-producto
+            [producto]="producto"
+            (verDetalle)="modal.abrir($event)"
+          />
+
+          <div
+            class="controles-orden"
+            role="group"
+            [attr.aria-label]="'Cambiar posición de ' + producto.nombre"
+          >
+            <button
+              class="btn btn-borde"
+              type="button"
+              [disabled]="indice === 0"
+              (click)="moverFavorito(indice, -1)"
+            >
+              Mover antes
+            </button>
+
+            <button
+              class="btn btn-borde"
+              type="button"
+              [disabled]="indice === productos().length - 1"
+              (click)="moverFavorito(indice, 1)"
+            >
+              Mover después
+            </button>
+          </div>
+
+          <button
+            class="btn btn-borde btn-bloque"
+            type="button"
+            [attr.aria-label]="'Quitar ' + producto.nombre + ' de favoritos'"
+            (click)="quitarFavorito(producto)"
+          >
+            Quitar de favoritos
+          </button>
+        </div>
+      }
+    </div>
+  } @else {
+    <div class="tarjeta centro">
+      <p>Todavía no tienes relojes favoritos.</p>
+      <a class="btn btn-dorado" routerLink="/relojes">
+        Explorar relojes
+      </a>
+    </div>
+  }
+</section>
