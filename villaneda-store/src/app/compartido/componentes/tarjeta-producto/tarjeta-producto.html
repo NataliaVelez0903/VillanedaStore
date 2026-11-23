@@ -1,0 +1,30 @@
+<article class="tarjeta-producto">
+  <div class="tarjeta-producto__imagen">
+    @if (tieneDescuento()) {
+      <span class="insignia tarjeta-producto__etiqueta">-{{ producto().descuentoPorcentaje }}%</span>
+    } @else if (producto().esNuevo) {
+      <span class="insignia insignia-dorada tarjeta-producto__etiqueta">NUEVO</span>
+    }
+    <img [src]="producto().imagen" [alt]="'Reloj ' + producto().nombre" width="400" height="400" loading="lazy" draggable="false" />
+  </div>
+
+  <div class="tarjeta-producto__info">
+    <h3>{{ producto().nombre }}</h3>
+    <small>{{ nombreMarca() }}</small>
+    <p class="precios">
+      <span>{{ precioFinal() | precio }}</span>
+      @if (tieneDescuento()) {
+        <s><span class="visualmente-oculto">Antes</span>{{ producto().precio | precio }}</s>
+      }
+    </p>
+
+    <button type="button" class="btn btn-borde btn-bloque" (click)="verDetalle.emit(producto())">
+      {{ tieneDescuento() ? 'Ver oferta' : 'Ver detalle' }}
+    </button>
+    @if (mostrarAgregar()) {
+      <button type="button" class="btn btn-dorado btn-bloque" (click)="agregar.emit(producto())">
+        Agregar al carrito
+      </button>
+    }
+  </div>
+</article>

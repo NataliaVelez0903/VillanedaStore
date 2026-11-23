@@ -6,7 +6,6 @@ export const MARCAS: Marca[] = [
   {
     id: 'curren',
     nombre: 'Curren',
-    pais: 'China',
     paisOrigen: 'China',
     logo: `${RUTA_LOGOS}curren.png`,
     destacada: true,
@@ -15,7 +14,6 @@ export const MARCAS: Marca[] = [
   {
     id: 'qq',
     nombre: 'Q&Q',
-    pais: 'Japón',
     paisOrigen: 'Japón',
     logo: `${RUTA_LOGOS}qq.png`,
     destacada: true,
@@ -24,16 +22,14 @@ export const MARCAS: Marca[] = [
   {
     id: 'g-force',
     nombre: 'G-Force',
-    pais: 'Colombia',
     paisOrigen: 'Colombia',
-    logo: `${RUTA_LOGOS}g-force.png`,
+    logo: `${RUTA_LOGOS}gforce.png`,
     destacada: true,
     descripcion: 'Relojes deportivos digitales y análogos con resistencia al agua.',
   },
   {
     id: 'salco',
     nombre: 'Salco',
-    pais: 'Colombia',
     paisOrigen: 'Colombia',
     logo: `${RUTA_LOGOS}salco.png`,
     destacada: true,
@@ -42,7 +38,6 @@ export const MARCAS: Marca[] = [
   {
     id: 'elite',
     nombre: 'Elite',
-    pais: 'Colombia',
     paisOrigen: 'Colombia',
     logo: `${RUTA_LOGOS}elite.png`,
     destacada: true,
