@@ -1,19 +1,35 @@
 <section class="contenedor" aria-labelledby="titulo-favoritos">
   <h1 id="titulo-favoritos" class="titulo-pagina">Mis favoritos</h1>
   <p class="subtitulo-pagina">
-    Guarda tus relojes preferidos y organiza el orden en que aparecen.
+    Arrastra desde la zona «Arrastrar» o usa los botones para ordenar tus relojes.
   </p>
 
   @if (productos().length > 0) {
-    <div class="rejilla rejilla-3">
+    <div
+      class="lista-favoritos"
+      cdkDropList
+      cdkDropListOrientation="mixed"
+      [cdkDropListData]="productos()"
+      (cdkDropListDropped)="soltarFavorito($event)"
+    >
       @for (producto of productos(); track producto.id; let indice = $index) {
-        <div>
+        <div
+          class="favorito"
+          cdkDrag
+          [cdkDragData]="producto"
+          [cdkDragStartDelay]="{ touch: 200, mouse: 0 }"
+        >
+          <div class="agarre" cdkDragHandle aria-hidden="true">
+            ⠿ Arrastrar
+          </div>
+
           <app-tarjeta-producto
             [producto]="producto"
             (verDetalle)="modal.abrir($event)"
           />
 
           <div
+            class="controles-orden"
             role="group"
             [attr.aria-label]="'Cambiar posición de ' + producto.nombre"
           >
