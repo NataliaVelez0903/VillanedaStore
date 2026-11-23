@@ -1,0 +1,49 @@
+<section class="contenedor carrito" aria-labelledby="titulo-carrito">
+  <h1 id="titulo-carrito" class="titulo-pagina">Carrito</h1>
+
+  @if (carrito.items().length > 0) {
+    <p class="subtitulo-pagina">Revisa tus productos antes de finalizar la compra.</p>
+
+    <div class="carrito__disposicion">
+      <ul class="carrito__lista">
+        @for (item of carrito.items(); track item.producto.id) {
+          <li class="tarjeta item">
+            <img [src]="item.producto.imagen" [alt]="'Reloj ' + item.producto.nombre" width="90" height="90" />
+
+            <div class="item__datos">
+              <h2>{{ item.producto.nombre }}</h2>
+              <span class="texto-suave">{{ precioFinal(item.producto) | precio }} c/u</span>
+            </div>
+
+            <div class="cantidad" role="group" [attr.aria-label]="'Cantidad de ' + item.producto.nombre">
+              <button type="button" aria-label="Disminuir"
+                (click)="carrito.cambiarCantidad(item.producto.id, item.cantidad - 1)">−</button>
+              <span aria-live="polite">{{ item.cantidad }}</span>
+              <button type="button" aria-label="Aumentar"
+                (click)="carrito.cambiarCantidad(item.producto.id, item.cantidad + 1)">+</button>
+            </div>
+
+            <strong class="item__subtotal">{{ precioFinal(item.producto) * item.cantidad | precio }}</strong>
+
+            <button type="button" class="btn-icono" [attr.aria-label]="'Quitar ' + item.producto.nombre"
+              (click)="carrito.quitar(item.producto.id)">×</button>
+          </li>
+        }
+      </ul>
+
+      <aside class="tarjeta resumen" aria-labelledby="titulo-resumen">
+        <h2 id="titulo-resumen" class="texto-dorado">Resumen</h2>
+        <p class="resumen__linea"><span>Productos</span><span>{{ carrito.cantidadTotal() }}</span></p>
+        <p class="resumen__linea"><span>Envío</span><span>Gratis</span></p>
+        <p class="resumen__linea resumen__total"><span>Total</span><span>{{ carrito.total() | precio }}</span></p>
+        <button type="button" class="btn btn-dorado btn-bloque" (click)="finalizarCompra()">Finalizar compra</button>
+        <button type="button" class="btn btn-borde btn-bloque" (click)="carrito.vaciar()">Vaciar carrito</button>
+      </aside>
+    </div>
+  } @else {
+    <div class="tarjeta carrito__vacio">
+      <p>Tu carrito está vacío.</p>
+      <a class="btn btn-dorado" routerLink="/relojes">Ver relojes</a>
+    </div>
+  }
+</section>

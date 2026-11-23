@@ -11,6 +11,8 @@ export interface Producto {
   descripcion: string;
   /** Precio antes de descuento, en pesos colombianos. */
   precio: number;
+  calificacion: number;
+  opiniones: number;
   imagen: string;
   categoria: CategoriaReloj;
   esNuevo: boolean;

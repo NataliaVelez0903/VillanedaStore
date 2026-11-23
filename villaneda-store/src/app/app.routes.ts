@@ -56,12 +56,12 @@ export const routes: Routes = [
     canActivate: [authGuard],
     loadComponent: () => import('./paginas/favoritos/favoritos').then((m) => m.Favoritos),
   },
-  // Cuando exista la página del carrito, descomentar:
-  // {
-  //   path: 'carrito',
-  //   title: titulo('Carrito'),
-  //   loadComponent: () => import('./paginas/carrito/carrito').then((m) => m.Carrito),
-  // },
+  
+  {
+     path: 'carrito',
+     title: titulo('Carrito'),
+     loadComponent: () => import('./paginas/carrito/carrito').then((m) => m.Carrito),
+  },
   {
     path: '**',
     title: titulo('Página no encontrada'),

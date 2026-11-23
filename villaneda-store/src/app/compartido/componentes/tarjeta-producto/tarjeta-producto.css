@@ -1,0 +1,79 @@
+/* Mismo estilo que las tarjetas de "Ofertas destacadas" del Inicio */
+:host {
+  display: block;
+  height: 100%;
+}
+
+.tarjeta-producto {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  background: var(--negro);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  transition: border-color var(--transition), transform var(--transition);
+}
+
+.tarjeta-producto:hover {
+  border-color: var(--borde-fuerte);
+  transform: translateY(-3px);
+}
+
+.tarjeta-producto__imagen img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  opacity: 0.9;
+}
+
+.tarjeta-producto__etiqueta {
+  position: absolute;
+  top: 0.4rem;
+  left: 0.4rem;
+  z-index: 1;
+}
+
+.tarjeta-producto__info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 0.8rem;
+}
+
+h3 {
+  font-family: var(--fuente-texto);
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+small {
+  font-size: 0.7rem;
+  color: var(--gris);
+  text-transform: uppercase;
+}
+
+.precios {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem 0.8rem;
+  margin-bottom: 0.4rem;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+}
+
+.precios s {
+  color: var(--gris);
+}
+
+.btn {
+  font-size: 0.85rem;
+  padding-block: 0.25rem;
+}
+
+/* Empuja los botones al fondo de la tarjeta */
+.btn:first-of-type {
+  margin-top: auto;
+}
