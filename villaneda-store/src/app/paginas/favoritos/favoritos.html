@@ -1,1 +1,25 @@
 <p>favoritos works!</p>
+<section class="contenedor" aria-labelledby="titulo-favoritos">
+  <h1 id="titulo-favoritos" class="titulo-pagina">Mis favoritos</h1>
+  <p class="subtitulo-pagina">
+    Los relojes que guardaste para consultar después.
+  </p>
+
+  @if (productos().length > 0) {
+    <div class="rejilla rejilla-3">
+      @for (producto of productos(); track producto.id) {
+        <app-tarjeta-producto
+          [producto]="producto"
+          (verDetalle)="modal.abrir($event)"
+        />
+      }
+    </div>
+  } @else {
+    <div class="tarjeta centro">
+      <p>Todavía no tienes relojes favoritos.</p>
+      <a class="btn btn-dorado" routerLink="/relojes">
+        Explorar relojes
+      </a>
+    </div>
+  }
+</section>
