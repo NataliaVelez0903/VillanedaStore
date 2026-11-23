@@ -37,6 +37,10 @@ export class IniciarSesion {
       return;
     }
 
+    const urlActual = this.router.parseUrl(this.router.url);
+    const volver = urlActual.queryParamMap.get('volver');
+    const destino = volver === '/favoritos' ? '/favoritos' : '/inicio';
+
     this.ingresando.set(true);
 
     try {
@@ -53,7 +57,7 @@ export class IniciarSesion {
         return;
       }
 
-      await this.router.navigateByUrl('/inicio');
+      await this.router.navigateByUrl(destino);
     } catch {
       this.mensajeError.set(
         'No pudimos iniciar sesión. Inténtalo de nuevo.',
