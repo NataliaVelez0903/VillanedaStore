@@ -2,7 +2,7 @@
   <h1 id="titulo-iniciar-sesion">Iniciar sesión</h1>
   <p>Ingresa con tu cuenta de Villaneda Store.</p>
 
-  <form [formGroup]="formulario" novalidate>
+  <form [formGroup]="formulario" (ngSubmit)="iniciarSesion()" novalidate>
     <div class="campo">
       <label for="correo">Correo electrónico</label>
       <input
@@ -46,12 +46,16 @@
       Recordar mi sesión
     </label>
 
+    @if (mensajeError()) {
+      <p class="error" role="alert">{{ mensajeError() }}</p>
+    }
+
     <button
       class="btn btn-dorado btn-bloque"
       type="submit"
-      [disabled]="formulario.invalid"
+      [disabled]="formulario.invalid || ingresando()"
     >
-      Iniciar sesión
+      {{ ingresando() ? 'Ingresando…' : 'Iniciar sesión' }}
     </button>
   </form>
 </section>
