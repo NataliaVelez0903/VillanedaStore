@@ -2,9 +2,10 @@ import { Component, inject, signal } from '@angular/core';
 import { AuthService } from '../../../nucleo/servicios/auth.service';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { contrasenasCoinciden } from '../../../nucleo/validadores/contrasenas-coinciden';
+import { RouterLink } from '@angular/router';
 
 @Component({
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterLink],
   selector: 'app-registro',
   styleUrl: './registro.css',
   templateUrl: './registro.html',
