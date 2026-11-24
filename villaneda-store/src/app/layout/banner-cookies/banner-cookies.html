@@ -1,17 +1,19 @@
 @if (consentimiento.mostrarBanner()) {
-  <section class="banner" role="region" aria-labelledby="titulo-cookies">
-    <div class="contenedor banner__fila">
-      <div>
-        <h2 id="titulo-cookies">Usamos cookies</h2>
-        <p>
-          Las cookies técnicas mantienen tu sesión. Si aceptas, también recordaremos tu correo para que
-          inicies sesión más rápido.
-        </p>
-      </div>
-      <div class="banner__botones">
-        <button type="button" class="btn btn-borde" (click)="consentimiento.rechazar()">Rechazar</button>
-        <button type="button" class="btn btn-dorado" (click)="consentimiento.aceptar()">Aceptar</button>
-      </div>
+<section class="banner" role="region" aria-labelledby="titulo-cookies">
+  <div class="contenedor banner__fila">
+    <div>
+      <h2 id="titulo-cookies">Usamos cookies</h2>
+      <p>
+        Las cookies técnicas permiten mantener tu sesión.
+        Si aceptas las cookies de preferencias y seleccionas
+        "Recordar mi sesión", también guardaremos tu correo
+        para facilitar tu próximo ingreso.
+      </p>
     </div>
-  </section>
+    <div class="banner__botones">
+      <button type="button" class="btn btn-borde" (click)="consentimiento.rechazar()">Rechazar</button>
+      <button type="button" class="btn btn-dorado" (click)="consentimiento.aceptar()">Aceptar</button>
+    </div>
+  </div>
+</section>
 }

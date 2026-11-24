@@ -72,6 +72,10 @@ export class AuthService {
 
   /** Correo guardado en la cookie "recordar correo" (para rellenar el login). */
   correoRecordado(): string {
+    if (!this.consentimiento.preferenciasPermitidas()) {
+      return '';
+    }
+
     return this.cookies.leer(COOKIE_RECORDAR_CORREO) ?? '';
   }
 

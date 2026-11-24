@@ -19,10 +19,13 @@ export class IniciarSesion {
   readonly mensajeError = signal('');
 
   readonly formulario = this.constructorFormulario.nonNullable.group({
-    correo: ['', [Validators.required, Validators.email]],
-    contrasena: ['', Validators.required],
-    recordar: [false],
-  });
+  correo: [
+    this.autenticacion.correoRecordado(),
+    [Validators.required, Validators.email],
+  ],
+  contrasena: ['', Validators.required],
+  recordar: [false],
+});
 
   async iniciarSesion(): Promise<void> {
     if (this.ingresando()) return;
