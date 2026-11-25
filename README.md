@@ -3,9 +3,19 @@
 
 ## Descripción del proyecto
 
-Villaneda Store es una aplicación web de comercio electrónico enfocada en la comercialización de relojes. El proyecto permite consultar productos, marcas y ofertas, gestionar favoritos, registrar usuarios, iniciar sesión y acceder a las diferentes secciones de la tienda.
+Villaneda Store es una aplicación web de comercio electrónico enfocada en la comercialización de relojes.
 
-El proyecto fue desarrollado con Angular como parte de un trabajo académico.
+Permite consultar productos, marcas y ofertas, administrar el carrito de compras, registrar usuarios, iniciar sesión, gestionar favoritos y consultar información de contacto.
+
+El proyecto fue desarrollado con Angular como trabajo final de Técnicas de Programación Frontend.
+
+## Integrantes
+
+| Integrante | Responsabilidades |
+|---|---|
+| Sebastián Villaneda | Estructura, navegación, inicio, diseño responsive y geolocalización. |
+| Milerick Henao | Catálogo, productos, ofertas, detalle, carrito y drag and drop. |
+| Natalia Vélez Orjuela | Registro, autenticación, guards, cookies, favoritos y pruebas de sus módulos. |
 
 ## Tecnologías utilizadas
 
@@ -13,9 +23,11 @@ El proyecto fue desarrollado con Angular como parte de un trabajo académico.
 - TypeScript
 - HTML5
 - CSS3
-- Angular CDK
 - Angular Router
+- Angular CDK
 - Reactive Forms
+- Signals
+- RxJS
 - LocalStorage
 - Cookies
 - Vitest
@@ -23,9 +35,17 @@ El proyecto fue desarrollado con Angular como parte de un trabajo académico.
 
 ## Instalación y ejecución
 
-Ingresar a la carpeta de la aplicación:
+Clonar el repositorio:
 
 ```bash
+git clone https://github.com/NataliaVelez0903/VillanedaStore.git
+```
+
+Ingresar al repositorio y seleccionar la rama de integración:
+
+```bash
+cd VillanedaStore
+git checkout develop
 cd villaneda-store
 ```
 
@@ -45,92 +65,157 @@ Abrir en el navegador:
 
 http://localhost:4200/
 
-## Funcionalidades del proyecto
+## Requisitos del proyecto
 
-- Página de inicio.
-- Catálogo de relojes.
-- Consulta de marcas y ofertas.
-- Blog.
-- Contacto.
-- Carrito de compras.
-- Registro de usuarios.
-- Inicio y cierre de sesión.
-- Gestión de favoritos.
-- Gestión de preferencias de cookies.
+Las siguientes rutas de archivos son relativas a `villaneda-store/`.
 
-## Módulo de cuenta y autenticación
+| Requisito | Implementación | Ruta o componente |
+|---|---|---|
+| Navegación | Menús con Angular Router | `src/app/app.routes.ts` |
+| Navbar reutilizable | Navegación principal | `src/app/layout/navbar/` |
+| Footer reutilizable | Enlaces y preferencias | `src/app/layout/footer/` |
+| Página 404 | Ruta no encontrada | `src/app/paginas/pagina-no-encontrada/` |
+| Registro | Formularios reactivos y validaciones | `src/app/paginas/cuenta/registro/` |
+| Login | Autenticación de usuarios | `src/app/paginas/cuenta/iniciar-sesion/` |
+| Protección de rutas | Guards funcionales | `src/app/nucleo/guards/` |
+| Buenas prácticas | Servicios, interfaces y componentes | `src/app/nucleo/` y `src/app/compartido/` |
+| Cookies | Guardar, leer y eliminar | `src/app/nucleo/servicios/cookies.service.ts` |
+| Consentimiento | Aceptar, rechazar y restablecer | `src/app/nucleo/servicios/consentimiento-cookies.service.ts` |
+| Banner de cookies | Interfaz de consentimiento | `src/app/layout/banner-cookies/` |
+| Geolocalización | Ubicación y sede cercana | `src/app/paginas/contacto/` |
+| Servicio de geolocalización | API de ubicación | `src/app/nucleo/servicios/geolocalizacion.service.ts` |
+| Diseño responsive | Media queries, grid y flexbox | `src/styles.css` y estilos de componentes |
+| Drag and drop | Ordenamiento de favoritos | `src/app/paginas/favoritos/` |
+| Drag and drop | Productos al carrito | `src/app/paginas/catalogo/` |
 
-### Registro de usuarios
+## Rutas de navegación
 
-Permite crear una cuenta mediante un formulario con los siguientes campos:
+| Ruta | Funcionalidad |
+|---|---|
+| `/inicio` | Página principal |
+| `/relojes` | Catálogo de productos |
+| `/marcas` | Marcas disponibles |
+| `/ofertas` | Productos en oferta |
+| `/blog` | Artículos |
+| `/contacto` | Contacto y geolocalización |
+| `/registro` | Crear cuenta |
+| `/iniciar-sesion` | Ingresar a una cuenta |
+| `/favoritos` | Favoritos del usuario autenticado |
+| `/carrito` | Carrito de compras |
+| `**` | Página no encontrada |
+
+Las páginas utilizan lazy loading para cargar sus componentes cuando son requeridos.
+
+## Registro de usuarios
+
+Permite registrar cuentas mediante formularios reactivos.
+
+Campos:
 
 - Nombre completo.
 - Correo electrónico.
 - Contraseña.
 - Confirmación de contraseña.
 
-Se implementaron validaciones para campos obligatorios, formato del correo electrónico, longitud mínima de contraseña y coincidencia de contraseñas.
+Validaciones:
 
-También se controla el registro de correos duplicados.
+- Campos obligatorios.
+- Nombre de mínimo dos caracteres.
+- Formato del correo electrónico.
+- Contraseña de mínimo ocho caracteres.
+- Coincidencia de contraseñas.
+- Control de correos duplicados.
 
-### Inicio y cierre de sesión
+El formulario presenta mensajes de error y deshabilita el envío cuando los datos no son válidos.
 
-Permite ingresar utilizando las credenciales de una cuenta registrada.
+## Autenticación
+
+El servicio `AuthService` administra el registro, inicio y cierre de sesión.
 
 Incluye:
 
 - Validación de credenciales.
-- Mensajes de error.
 - Persistencia de sesión.
 - Opción de recordar sesión.
-- Recuperación del correo electrónico recordado.
+- Recuperación del correo recordado.
+- Mensajes de error.
 - Navegación entre registro e inicio de sesión.
-- Cierre de sesión.
 
-### Protección de rutas
+Los usuarios se almacenan en localStorage y las contraseñas se representan mediante hashes SHA-256.
 
-Se implementaron dos guards:
+## Protección de rutas
 
-- `authGuard`: restringe el acceso a páginas privadas cuando el usuario no ha iniciado sesión.
-- `invitadoGuard`: evita que usuarios autenticados ingresen nuevamente a las páginas de registro e inicio de sesión.
+Se utilizan dos guards funcionales:
 
-Cuando un usuario intenta acceder a favoritos sin iniciar sesión, se redirige al formulario de ingreso conservando la ruta de destino.
+- `authGuard`: protege la ruta de favoritos cuando no existe una sesión activa.
+- `invitadoGuard`: impide que los usuarios autenticados vuelvan a las páginas de registro e inicio de sesión.
 
-## Módulo de favoritos
+Cuando un usuario intenta acceder a favoritos sin iniciar sesión, se redirige al formulario de ingreso conservando la ruta de destino mediante el parámetro `volver`.
 
-Permite que cada usuario administre su propia lista de productos favoritos.
+## Gestión de favoritos
+
+Cada usuario dispone de su propia lista de favoritos.
 
 Funcionalidades:
 
 - Agregar productos.
 - Eliminar productos.
 - Consultar favoritos.
-- Cambiar el orden mediante botones.
-- Cambiar el orden mediante arrastrar y soltar.
-- Conservar el orden después de recargar la página.
-- Mantener listas independientes para cada usuario.
+- Ordenar mediante botones.
+- Ordenar mediante arrastrar y soltar.
+- Conservar el orden después de recargar.
+- Mantener listas independientes por usuario.
 
-Para el sistema de arrastrar y soltar se utiliza Angular CDK.
+El ordenamiento utiliza Angular CDK y `moveItemInArray`.
+
+La interfaz cuenta con retroalimentación visual durante el arrastre y botones de ordenamiento como alternativa.
 
 ## Gestión de cookies
 
-La aplicación cuenta con un banner que permite aceptar o rechazar las cookies de preferencias.
-
-Se implementaron las siguientes cookies:
+El servicio `CookiesService` centraliza las operaciones de guardar, leer y eliminar cookies.
 
 | Cookie | Función | Duración |
 |---|---|---|
-| vs_consentimiento | Guardar la decisión del usuario | 180 días |
-| vs_sesion | Mantener la sesión iniciada | 7 días al seleccionar recordar sesión; de lo contrario, cookie de sesión |
-| vs_recordar_correo | Recordar el correo electrónico | 30 días |
+| `vs_consentimiento` | Guarda la decisión del usuario | 180 días |
+| `vs_sesion` | Mantiene la sesión activa | 7 días si se selecciona recordar sesión; de lo contrario, cookie de sesión |
+| `vs_recordar_correo` | Recuerda el correo electrónico | 30 días |
 
-El correo únicamente se guarda cuando el usuario acepta las cookies de preferencias y selecciona la opción de recordar sesión.
+La cookie de sesión es necesaria para el funcionamiento de la autenticación.
 
-Desde el footer se pueden restablecer las preferencias de cookies sin cerrar la sesión activa.
+El correo se guarda únicamente cuando el usuario acepta las cookies de preferencias y selecciona recordar sesión.
+
+El banner permite aceptar o rechazar las cookies. Desde el footer se pueden restablecer las preferencias sin cerrar la sesión activa.
+
+## Geolocalización
+
+El módulo de contacto contempla la ubicación del usuario y la consulta de la sede más cercana.
+
+Archivos asociados:
+
+- `src/app/paginas/contacto/`
+- `src/app/nucleo/servicios/geolocalizacion.service.ts`
+
+## Buenas prácticas de programación
+
+El proyecto incorpora:
+
+- Separación de responsabilidades mediante servicios.
+- Interfaces y tipado con TypeScript.
+- Inyección de dependencias.
+- Componentes reutilizables.
+- Nombres descriptivos.
+- Lazy loading.
+- Formularios reactivos.
+- Variables CSS compartidas.
+- HTML semántico y atributos de accesibilidad.
+- Pruebas automatizadas.
+- Control de versiones mediante Git.
 
 ## Diseño responsive
 
-Los módulos de registro, inicio de sesión, favoritos y cookies fueron revisados manualmente en los siguientes tamaños de pantalla:
+La aplicación utiliza Flexbox, CSS Grid y media queries para adaptar las interfaces.
+
+Los módulos de registro, inicio de sesión, favoritos y cookies fueron revisados manualmente en los siguientes tamaños:
 
 - 360 px: dispositivos móviles.
 - 768 px: tabletas.
@@ -138,15 +223,15 @@ Los módulos de registro, inicio de sesión, favoritos y cookies fueron revisado
 
 ## Pruebas automatizadas
 
-El proyecto utiliza Vitest y Angular TestBed para realizar pruebas automatizadas.
+Se utiliza Vitest junto con Angular TestBed.
 
-Para ejecutar todas las pruebas:
+Ejecutar todas las pruebas desde la carpeta `villaneda-store`:
 
 ```bash
 npm test -- --watch=false
 ```
 
-### Resultados del módulo de cuenta, favoritos y cookies
+### Resultados de cuenta, favoritos y cookies
 
 | Módulo | Pruebas exitosas |
 |---|---:|
@@ -160,23 +245,21 @@ npm test -- --watch=false
 | Invitado Guard | 4/4 |
 | Total | 53/53 |
 
-Todas las pruebas correspondientes a estos módulos fueron superadas correctamente.
-
 ### Resultados generales
 
-### Resultados generales
+Última ejecución verificada: 25 de noviembre de 2026.
 
-Última ejecución: 25 de noviembre de 2026.
+| Indicador | Resultado |
+|---|---:|
+| Archivos de pruebas exitosos | 19/19 |
+| Total de pruebas | 69 |
+| Pruebas exitosas | 69 |
+| Pruebas fallidas | 0 |
+| Porcentaje de éxito | 100 % |
 
-- Total de pruebas: 69.
-- Pruebas exitosas: 69.
-- Pruebas fallidas: 0.
-
-Todas las pruebas automatizadas del proyecto fueron
-superadas correctamente.
 ## Compilación de producción
 
-Para generar la compilación:
+Ejecutar:
 
 ```bash
 npm run build
@@ -188,25 +271,36 @@ Los archivos generados se encuentran en:
 dist/villaneda-store/
 ```
 
-La compilación de producción fue ejecutada correctamente el 25 de noviembre de 2026.
+Última compilación verificada: 25 de noviembre de 2026.
+
+Resultado: compilación exitosa.
 
 ## Control de versiones
 
 El proyecto utiliza Git y GitHub para el trabajo colaborativo.
 
-- `develop`: rama de integración del equipo.
-- `natalia-cuenta`: rama de desarrollo de cuenta, autenticación, favoritos y cookies.
+- `main`: rama principal.
+- `develop`: rama de integración.
+- `natalia-cuenta`: desarrollo de cuenta, autenticación, favoritos y cookies.
+- `fix/pruebas-catalogo`: corrección de las pruebas del catálogo.
+- Ramas de funcionalidades para los demás módulos.
 
-Los cambios se organizan mediante commits separados por funcionalidad y se integran mediante Pull Requests.
+Los cambios se organizan mediante commits descriptivos y Pull Requests.
 
 ## Consideraciones
 
-La aplicación utiliza almacenamiento local y cookies para simular la autenticación y persistencia de datos.
+El proyecto utiliza localStorage y cookies para simular la autenticación y persistencia de datos.
 
-Las contraseñas se almacenan como hashes SHA-256 y no como texto plano.
+Esta implementación tiene fines académicos y no constituye un sistema de autenticación seguro para producción.
 
-Esta implementación tiene fines académicos. Para un entorno real de producción se requiere un backend, una base de datos y mecanismos de autenticación y almacenamiento de contraseñas seguros.
+Una implementación real requiere un backend, una base de datos, mecanismos seguros de gestión de sesiones y algoritmos adecuados para almacenar contraseñas.
+
+## Mockup original
+
+El mockup original se adjuntará como parte de la entrega final del proyecto.
 
 ## Estado del proyecto
 
 Los módulos de registro, autenticación, favoritos, protección de rutas y consentimiento de cookies se encuentran implementados y probados.
+
+La rama de integración supera las 69 pruebas automatizadas y compila correctamente para producción.
