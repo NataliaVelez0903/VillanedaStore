@@ -164,14 +164,16 @@ Todas las pruebas correspondientes a estos módulos fueron superadas correctamen
 
 ### Resultados generales
 
+### Resultados generales
+
 Última ejecución: 25 de noviembre de 2026.
 
 - Total de pruebas: 69.
-- Pruebas exitosas: 68.
-- Pruebas fallidas: 1.
+- Pruebas exitosas: 69.
+- Pruebas fallidas: 0.
 
-La prueba pendiente corresponde al componente de catálogo, debido a la configuración del proveedor ActivatedRoute en el entorno de pruebas.
-
+Todas las pruebas automatizadas del proyecto fueron
+superadas correctamente.
 ## Compilación de producción
 
 Para generar la compilación:
