@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 import { IniciarSesion } from './iniciar-sesion';
 
 describe('IniciarSesion', () => {
@@ -8,14 +9,15 @@ describe('IniciarSesion', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [IniciarSesion],
+      providers: [provideRouter([])],
     }).compileComponents();
 
     fixture = TestBed.createComponent(IniciarSesion);
     component = fixture.componentInstance;
-    await fixture.whenStable();
+    fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('debe crearse correctamente', () => {
     expect(component).toBeTruthy();
   });
 });
