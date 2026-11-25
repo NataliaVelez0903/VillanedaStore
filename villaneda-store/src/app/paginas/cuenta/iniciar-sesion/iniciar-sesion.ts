@@ -1,10 +1,11 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../nucleo/servicios/auth.service';
 
+
 @Component({
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterLink],
   selector: 'app-iniciar-sesion',
   styleUrl: './iniciar-sesion.css',
   templateUrl: './iniciar-sesion.html',
@@ -18,10 +19,13 @@ export class IniciarSesion {
   readonly mensajeError = signal('');
 
   readonly formulario = this.constructorFormulario.nonNullable.group({
-    correo: ['', [Validators.required, Validators.email]],
-    contrasena: ['', Validators.required],
-    recordar: [false],
-  });
+  correo: [
+    this.autenticacion.correoRecordado(),
+    [Validators.required, Validators.email],
+  ],
+  contrasena: ['', Validators.required],
+  recordar: [false],
+});
 
   async iniciarSesion(): Promise<void> {
     if (this.ingresando()) return;
