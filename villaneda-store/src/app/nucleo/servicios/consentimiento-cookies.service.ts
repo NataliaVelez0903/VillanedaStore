@@ -33,6 +33,7 @@ export class ConsentimientoCookiesService {
   /** Borra la decisión para que el banner vuelva a aparecer. */
   restablecer(): void {
     this.cookies.eliminar(COOKIE_CONSENTIMIENTO);
+    this.cookies.eliminar(COOKIE_RECORDAR_CORREO);
     this.estado.set('pendiente');
   }
 
