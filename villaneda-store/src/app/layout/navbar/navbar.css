@@ -210,3 +210,57 @@
 
   .buscador { max-width: none; }
 }
+
+/* ---------- Logo Villaneda Store ---------- */
+/* Imagen a la izquierda y texto a la derecha, como en el mockup.
+   Ojo: styles.css define .logo con flex-direction: column (para el footer),
+   por eso aquí se fuerza "row" para que el texto no quede debajo de la imagen. */
+.logo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.logo__img {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+  display: block;
+  flex-shrink: 0;
+}
+
+.logo__texto {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 2px;
+}
+
+.logo__nombre {
+  color: var(--color-primary);
+  font-size: 1.1rem;
+  letter-spacing: 0.08em;
+  line-height: 1.1;
+}
+
+.logo__sub {
+  color: var(--color-primary);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.32em;
+  line-height: 1.1;
+  margin-top: 0;
+  text-align: left;
+}
+
+/* En pantallas pequeñas el logo se achica para dejar espacio al menú y a los íconos. */
+@media (max-width: 520px) {
+  .logo { gap: 8px; }
+  .logo__img { width: 44px; height: 44px; }
+  .logo__nombre { font-size: 0.95rem; }
+  .logo__sub { font-size: 0.65rem; }
+}
