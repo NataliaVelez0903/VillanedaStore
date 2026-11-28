@@ -42,14 +42,14 @@ export class Inicio implements OnInit, OnDestroy {
       titulo2: 'DEFINEN TU TIEMPO',
       lema: 'TU ESTILO, TU MOMENTO.',
       texto: 'Descubre nuestra colección de relojes originales con estilo, calidad y garantía.',
-      imagen: 'img/hero.png',
+      imagen: 'img/productos/curren-grande.png',
     },
     {
       titulo1: 'NUEVA',
       titulo2: 'COLECCIÓN',
       lema: 'ACERO Y ELEGANCIA.',
       texto: 'Llegaron los modelos más recientes de nuestras marcas.',
-      imagen: 'img/hero.png',
+      imagen: 'img/productos/curren-grande.png',
     },
     {
       titulo1: 'OFERTAS',
